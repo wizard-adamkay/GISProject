@@ -1,0 +1,8 @@
+//
+// Created by Adam k on 11/22/2022.
+//
+
+#ifndef GISPROJECT_BUFFERPOOL_H
+#define GISPROJECT_BUFFERPOOL_H
+
+#endif //GISPROJECT_BUFFERPOOL_H

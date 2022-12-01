@@ -1,0 +1,8 @@
+//
+// Created by Adam k on 11/22/2022.
+//
+
+#ifndef GISPROJECT_SYSTEMMANAGER_H
+#define GISPROJECT_SYSTEMMANAGER_H
+
+#endif //GISPROJECT_SYSTEMMANAGER_H

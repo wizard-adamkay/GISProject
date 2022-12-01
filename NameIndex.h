@@ -1,0 +1,8 @@
+//
+// Created by Adam k on 11/22/2022.
+//
+
+#ifndef GISPROJECT_NAMEINDEX_H
+#define GISPROJECT_NAMEINDEX_H
+
+#endif //GISPROJECT_NAMEINDEX_H
