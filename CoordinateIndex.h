@@ -67,13 +67,11 @@ private:
                 double centerLon = (quadNode.nwBound.lon + quadNode.seBound.lon)/2.0;
                 double centerLat = (quadNode.nwBound.lat + quadNode.seBound.lat)/2.0;
                 Point centerPoint(centerLon, centerLat);
-                Point neBound();
-                Point swBound();
                 //nw se
-                quadNode.ne = new QuadNode{neBound, centerPoint, nullptr, nullptr, nullptr, nullptr};
-                quadNode.nw = new QuadNode{neBound, centerPoint, nullptr, nullptr, nullptr, nullptr};
-                quadNode.se = new QuadNode{neBound, centerPoint, nullptr, nullptr, nullptr, nullptr};
-                quadNode.sw = new QuadNode{neBound, centerPoint, nullptr, nullptr, nullptr, nullptr};
+                quadNode.ne = new QuadNode{topcenter, eastcenter, nullptr, nullptr, nullptr, nullptr};
+                quadNode.nw = new QuadNode{quadNode.nwBound,centerPoint, nullptr, nullptr, nullptr, nullptr};
+                quadNode.se = new QuadNode{centerPoint, quadNode.seBound, nullptr, nullptr, nullptr, nullptr};
+                quadNode.sw = new QuadNode{westcenter, southcenter, nullptr, nullptr, nullptr, nullptr};
             } else {
                 quadNode.info.points.push_back(p);
                 vector<int> off;
