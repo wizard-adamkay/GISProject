@@ -28,7 +28,10 @@ public:
 
     void log(const string& slog){
         logFile << slog << "\n";
-//        cout << slog << endl;
+    }
+
+    void breakLine(){
+        logFile << "------------------------------------------------------------------------------------------" << endl;
     }
 
     void shutdown() {
