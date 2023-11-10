@@ -23,7 +23,7 @@ The implementation of a bufferPool to store and manage the most recent 15 query 
 
 ## Available Commands:
 | Commands        | Description           |
-| ------------- |:------------------------------------------------------------------------------:|
+| ------------- |------------------------------------------------------------------------------|
 | World:        | Coordinates are converted into total seconds and saved for future validation. |
 | Import:       | Parses each line of the import file and checks if they are within the bounds set by the world command. If they are the line is saved to the database file and inserted into the NameIndex’s hash table and the coordinateIndex’s quadtree. |
 | Debug:        | The debug command logs the current state of its argument.      |
