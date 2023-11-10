@@ -12,7 +12,8 @@ Run:	./GIS \<database file name\> \<command script name\> \<log file name\>
 
 The GIS project allows for storage of GIS records within a database file and saves the offsets and coordinates to a quadtree and the offsets and feature name/state abbreviation to a hashtable. When searching for a GIS record through feature name/ state abbreviation the hashtable is used. When searching by specific coordinate or by an area, the quad tree is used. The offsets returned by these searches are then retrieved from the database file and made into GISRecord objects. These objects are logged and stored within the bufferPool. The bufferPool stores the last 15 results from queries. Debugging commands are also available to print the state of the pool, hashtable, quadtree, or world.
 
-Entity Relationship Diagram
+**Entity Relationship Diagram**
+
 ![Alt text](image.png)
 
 ## Lessons Learned:
@@ -34,4 +35,5 @@ The implementation of a bufferPool to store and manage the most recent 15 query 
 ## Limitations:
 
 •	Debug world can only display 9 features within one tile before malforming the display.
+
 •	No support for “looped” world boundaries eg. north bound with lower latitude than south bound.
