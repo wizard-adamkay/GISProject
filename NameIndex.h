@@ -22,7 +22,9 @@ public:
     HashTable(){
         tableSize = 1024;
         numEntries = 0;
-        entries.resize(tableSize);
+        for(int i = 0; i < tableSize; i++){
+            entries.emplace_back(entry());
+        }
     }
 
     int insert(const string& s, int offset){
@@ -140,8 +142,14 @@ private:
         entries.resize(tableSize);
         entries.clear();
         numEntries = 0;
-        for (auto &entry: oldEntries)
-            insert(entry.nameAndAbbrv, entry.offsets);
+        for(int i = 0; i < tableSize; i++){
+            entries.emplace_back(entry());
+        }
+        for (const auto& ent: oldEntries) {
+            if(!ent.nameAndAbbrv.empty()){
+                insert(ent.nameAndAbbrv, ent.offsets);
+            }
+        }
     }
 };
 class NameIndex {

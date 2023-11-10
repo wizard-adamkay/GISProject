@@ -24,7 +24,7 @@ public:
                     break;
                 }
             }
-            if(GISList.size() >= 15){
+            if(GISList.size() >= poolMax){
                 GISList.pop_back();
             }
             GISList.push_front(record);

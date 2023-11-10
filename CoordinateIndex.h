@@ -5,7 +5,6 @@
 #ifndef GISPROJECT_COORDINATEINDEX_H
 #define GISPROJECT_COORDINATEINDEX_H
 
-#include <utility>
 #include <vector>
 #include <string>
 #include "GISRecord.h"

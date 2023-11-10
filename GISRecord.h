@@ -98,19 +98,19 @@ public:
         if(!stateNumeric.empty()) s+= "stateNumeric:\t\t" +  stateNumeric + "\n";
         if(!countyName.empty()) s+= "countyName:\t\t" +  countyName + "\n";
         if(!countyNumeric.empty()) s+= "countyNumeric:\t\t" +  countyNumeric + "\n";
-        if(!primaryLatitudeDMS.empty()) s+= "primaryLatitudeDMS:\t\t" +  primaryLatitudeDMS + "\n";
-        if(!primaryLongitudeDMS.empty()) s+= "primaryLongitudeDMS:\t\t" +  primaryLongitudeDMS + "\n";
-        s+= "primaryLatitudeDEC:\t\t" + to_string(primaryLatitudeDEC) + "\n";
-        s+= "primaryLongitudeDEC:\t\t" +  to_string(primaryLongitudeDEC) + "\n";
-        if(!sourceLatitudeDMS.empty()) s+= "sourceLatitudeDMS:\t\t" +  sourceLatitudeDMS + "\n";
-        if(!sourceLongitudeDMS.empty()) s+= "sourceLongitudeDMS:\t\t" +  sourceLongitudeDMS + "\n";
-        if(sourceLatitudeDEC != 0) s+= "sourceLatitudeDEC:\t\t" +  to_string(sourceLatitudeDEC) + "\n";
-        if(sourceLongitudeDEC != 0) s+= "sourceLongitudeDEC:\t\t" +  to_string(sourceLongitudeDEC) + "\n";
-        if(elevationMeters != -9999 && elevationFeet != -9999) s+= "elevationMeters:\t\t" + to_string(elevationMeters) + "\nelevationFeet:\t\t" +  to_string(elevationFeet) + "\n";
+        if(!primaryLatitudeDMS.empty()) s+= "primaryLatitudeDMS:\t" +  primaryLatitudeDMS + "\n";
+        if(!primaryLongitudeDMS.empty()) s+= "primaryLongitudeDMS:\t" +  primaryLongitudeDMS + "\n";
+        s+= "primaryLatitudeDEC:\t" + to_string(primaryLatitudeDEC) + "\n";
+        s+= "primaryLongitudeDEC:\t" +  to_string(primaryLongitudeDEC) + "\n";
+        if(!sourceLatitudeDMS.empty()) s+= "sourceLatitudeDMS:\t" +  sourceLatitudeDMS + "\n";
+        if(!sourceLongitudeDMS.empty()) s+= "sourceLongitudeDMS:\t" +  sourceLongitudeDMS + "\n";
+        if(sourceLatitudeDEC != 0) s+= "sourceLatitudeDEC:\t" +  to_string(sourceLatitudeDEC) + "\n";
+        if(sourceLongitudeDEC != 0) s+= "sourceLongitudeDEC:\t" +  to_string(sourceLongitudeDEC) + "\n";
+        if(elevationMeters != -9999 && elevationFeet != -9999) s+= "elevationMeters:\t" + to_string(elevationMeters) + "\nelevationFeet:\t\t" +  to_string(elevationFeet) + "\n";
         if(!mapName.empty()) s+= "mapName:\t\t" +  mapName + "\n";
         if(!dateCreated.empty()) s+= "dateCreated:\t\t" +  dateCreated + "\n";
         if(!dateEdited.empty()) s+= "dateEdited:\t\t" +  dateEdited + "\n";
-        if(offset != -1) s+= "offset:\t\t" + to_string(offset) + "\n";
+        if(offset != -1) s+= "offset:\t\t\t" + to_string(offset) + "\n";
         return s;
     }
 

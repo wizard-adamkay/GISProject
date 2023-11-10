@@ -26,6 +26,28 @@ public:
         logFile << "Start Time: " << ctime(&nowTime) << endl;
     }
 
+    void resultLog(const vector<GISRecord>& records){
+        if(records.empty()){
+            log("No matches found");
+        } else {
+            log("The following "+ to_string(records.size()) +" feature(s) were found:");
+        }
+        for(const GISRecord& record : records){
+            log('\t'+to_string(record.offset)+":\t\""+record.featureName+"\" \""+record.countyName+"\" \""+record.stateAlpha+"\" \""+record.primaryLatitudeDMS+"\" \""+record.primaryLongitudeDMS+"\"");
+        }
+    }
+
+    void resultLogLong(const vector<GISRecord>& records){
+        if(records.empty()){
+            log("No matches found");
+        } else {
+            log("The following "+ to_string(records.size()) +" feature(s) were found:");
+        }
+        for(const GISRecord& record : records){
+            log(record.str());
+        }
+    }
+
     void log(const string& slog){
         logFile << slog << "\n";
     }

@@ -90,6 +90,7 @@ private:
                 coordinateIndex = CoordinateIndex(westBoundLongSec, northBoundLatSec, eastBoundLongSec, southBoundLatSec);
                 nameIndex = NameIndex();
                 bufferPool = BufferPool();
+
                 break;
             }
             case import: {
@@ -99,7 +100,7 @@ private:
                 int count = 0;
                 int largestProbeSeq = 0;
                 while (getline(infile, line)) {
-                    if(is_inside_world(line)){
+                    if(indexable(line) && is_inside_world(line)){
                         count++;
                         coordinateIndex.insert(line, count);
                         int probeSeq = nameIndex.insert(line, count);
@@ -112,15 +113,65 @@ private:
                 infile.close();
                 break;
             }
-            case debug:
-                if (arguments == "quad"){
+            case debug: {
+                if (arguments == "quad") {
                     logger.log(coordinateIndex.debug());
-                } else if(arguments == "hash"){
+                } else if (arguments == "hash") {
                     logger.log(nameIndex.debug());
-                } else if (arguments == "pool"){
+                } else if (arguments == "pool") {
                     logger.log(bufferPool.debug());
+                } else if (arguments == "world") {
+                    vector<int> lats;
+                    vector<int> lons;
+                    string line;
+                    ifstream infile(dbFileName);
+                    while (getline(infile, line)) {
+                        string holder;
+                        vector<string> splitInputs;
+                        for(char i : line) {
+                            if (i != '|') {
+                                holder += i;
+                            } else {
+                                splitInputs.push_back(holder);
+                                holder = "";
+                            }
+                        }
+                        lats.push_back(DMStoS(splitInputs[7]));
+                        lons.push_back(DMStoS(splitInputs[8]));
+                    }
+                    int world[40][150];
+                    for(auto & i : world){
+                        for(auto & j : i){
+                            j = 0;
+                        }
+                    }
+                    int dblat = northBoundLatSec - southBoundLatSec;
+                    int dblon = eastBoundLongSec - westBoundLongSec;
+                    for(int i = 0; i < lats.size(); i++){
+                        int lat = (float(lats[i] - southBoundLatSec)/dblat)*40;
+                        int lon = (float(lons[i] - westBoundLongSec)/dblon)*150;
+                        lat %= 40;
+                        lon %= 150;
+                        world[lat][lon]++;
+                    }
+
+                    string s = "+------------------------------------------------------------------------------------------------------------------------------------------------------+\n";
+                    for(auto & i : world){
+                        s+='|';
+                        for(int j : i){
+                            if(j == 0){
+                                s+=' ';
+                            } else {
+                                s+= to_string(j);
+                            }
+                        }
+                        s+="|\n";
+                    }
+                    s += "+------------------------------------------------------------------------------------------------------------------------------------------------------+";
+                    logger.log(s);
                 }
                 break;
+            }
             case what_is_at: {
                 stringstream s(arguments);
                 string lat, lon;
@@ -128,28 +179,14 @@ private:
                 vector<int> offsets = coordinateIndex.find(DMStoS(lon), DMStoS(lat), 0, 0);
                 vector<GISRecord> records = offsetsToGISRecords(offsets);
                 bufferPool.add(records);
-                if(records.empty()){
-                    logger.log("No matches found");
-                } else {
-                    logger.log("The following "+ to_string(records.size()) +" feature(s) were found:");
-                }
-                for(const GISRecord& record : records){
-                    logger.log('\t'+to_string(record.offset)+":\t\""+record.featureName+"\" \""+record.countyName+"\" \""+record.stateAlpha+"\" \""+record.primaryLatitudeDMS+"\" \""+record.primaryLongitudeDMS+"\"");
-                }
+                logger.resultLog(records);
                 break;
             }
             case what_is:{
                 vector<int> results = nameIndex.find(arguments);
                 vector<GISRecord> records = offsetsToGISRecords(results);
                 bufferPool.add(records);
-                if(records.empty()){
-                    logger.log("No matches found");
-                } else {
-                    logger.log("The following "+ to_string(records.size()) +" feature(s) were found:");
-                }
-                for(const GISRecord& record : records){
-                    logger.log('\t'+to_string(record.offset)+":\t\""+record.countyName+"\" \""+record.primaryLatitudeDMS+"\" \""+record.primaryLongitudeDMS+"\"");
-                }
+                logger.resultLog(records);
                 break;
             }
 
@@ -175,17 +212,10 @@ private:
                     records = filterGISRecords(records,filterType);
                 }
                 bufferPool.add(records);
-                if(records.empty()){
-                    logger.log("No matches found");
-                } else {
-                    logger.log("The following "+ to_string(records.size()) +" feature(s) were found:");
-                }
-                for(const GISRecord& record : records){
-                    if(longtype){
-                        logger.log(record.str());
-                    } else{
-                        logger.log('\t'+to_string(record.offset)+":\t\""+record.featureName+"\" \""+record.countyName+"\" \""+record.stateAlpha+"\" \""+record.primaryLatitudeDMS+"\" \""+record.primaryLongitudeDMS+"\"");
-                    }
+                if(longtype){
+                    logger.resultLogLong(records);
+                }else{
+                    logger.resultLog(records);
                 }
                 break;
             }
@@ -290,6 +320,23 @@ private:
             }
         }
         return "";
+    }
+
+    static bool indexable(const string& s){
+        string holder;
+        vector<string> splitInputs;
+        for(char i : s) {
+            if (i != '|') {
+                holder += i;
+            } else {
+                splitInputs.push_back(holder);
+                holder = "";
+            }
+        }
+        if(splitInputs[1].empty() || splitInputs[7].empty() || splitInputs[8].empty() || splitInputs[3].empty() ||  splitInputs[7] == "Unknown" || splitInputs[8] == "Unknown") {
+            return false;
+        }
+        return true;
     }
 };
 #endif //GISPROJECT_COMMANDPROCESSOR_H
