@@ -3,6 +3,7 @@ The GIS project stores all specified GIS records within a database file and inde
 
 ## How to run:
 Compile:	g++ -std=c++11 GIS.cpp -o GIS
+
 Run:	./GIS \<database file name\> \<command script name\> \<log file name\>
 
 
